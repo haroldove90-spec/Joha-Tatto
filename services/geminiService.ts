@@ -50,7 +50,12 @@ export const generateTattooIdea = async (prompt: string): Promise<TattooIdea | n
       },
     });
 
-    const jsonString = response.text.trim();
+    const text = response.text;
+    if (!text) {
+      throw new Error("La respuesta de la API no contenía texto válido.");
+    }
+    
+    const jsonString = text.trim();
     const parsedJson = JSON.parse(jsonString);
     return parsedJson as TattooIdea;
 
